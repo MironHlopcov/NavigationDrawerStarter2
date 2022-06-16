@@ -75,6 +75,7 @@
     <Compile Include="Enums\CategoryTyps.cs" />
     <Compile Include="Filters\MFilter.cs" />
     <Compile Include="Fragments\DatePickerFragment.cs" />
+    <Compile Include="Fragments\RightMenuT.cs" />
     <Compile Include="Fragments\RightMenu.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\PdfReportTemplate.cs" />
@@ -189,7 +190,11 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResourceAnalysisConfig Include="Resources\layout\chekBox_layot.xml">
+      <SubType>Designer</SubType>
+    </AndroidResourceAnalysisConfig>
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\mipmap-mdpi\ic_cash_out.png" />
   </ItemGroup>

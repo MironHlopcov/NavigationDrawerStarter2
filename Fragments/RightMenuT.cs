@@ -12,12 +12,12 @@ using SearchView = AndroidX.AppCompat.Widget.SearchView;
 
 namespace NavigationDrawerStarter.Fragments
 {
-    public class RightMenu : Fragment
+    public class RightMenuT<T> : Fragment
     {
-        public static readonly string TAG = "My:" + typeof(RightMenu).Name.ToUpper();
+        public static readonly string TAG = "My:" + typeof(RightMenuT<T>).Name.ToUpper();
 
-        private AndroidX.AppCompat.Widget.SearchView sv1;
-        private ListView lv1;
+        private AndroidX.AppCompat.Widget.SearchView searchView;
+        private ListView searchList;
 
         private EditText date_text_edit1;
         private EditText date_text_edit2;
@@ -30,20 +30,41 @@ namespace NavigationDrawerStarter.Fragments
         private Button btn_Clear;
 
         ArrayAdapter adp1;
-        private List<string> _FiltredList;
+        private List<T> _FiltredList;
         public FilterItems FilredResultList { get; private set; }
 
         public delegate void EventHandler(object sender, EventArgs e);
         public event EventHandler SetFilters;
+
+
+
+
+        //
+        string SearchProperName;
+        string DatePropName;
+        string[] UnvisibleProps;
+        //
+
+
         protected virtual void OnSetFilters(object sender, EventArgs e)
         {
             EventHandler handler = SetFilters;
             handler?.Invoke(this, e);
         }
 
-        public RightMenu()
+        public RightMenuT(string searchProperName, string datePropName, string[] unvisibleProps)
         {
-            _FiltredList = new List<string>(); 
+            SearchProperName = searchProperName;
+            DatePropName = datePropName;
+            UnvisibleProps= unvisibleProps;   
+
+            var propertis = typeof(T).GetProperties();
+            foreach (var prop in propertis)
+            {
+
+            }
+
+            _FiltredList = new List<T>();
         }
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -51,56 +72,58 @@ namespace NavigationDrawerStarter.Fragments
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            
-                #region SerchView
-                View searchFragmt = inflater.Inflate(Resource.Layout.right_menu, container, false);
-                sv1 = searchFragmt.FindViewById<SearchView>(Resource.Id.searchView);
-                lv1 = searchFragmt.FindViewById<ListView>(Resource.Id.listViewToSearchView);
 
-                adp1 = new ArrayAdapter(this.Context, Android.Resource.Layout.SimpleListItem1, FiltredList);
-                lv1.Adapter = adp1;
-                adp1.Filter.InvokeFilter("!@$#$^%&%^*&^(*&(*&)(*(&*&^(*^%&$&^#^%#&$"); //todo
-                sv1.QueryTextChange += Sv1_QueryTextChange;
-                sv1.FocusChange += Sv1_FocusChange;
-                lv1.ItemClick += Lv1_ItemClick;
-                #endregion
+            #region SerchView
+            View searchFragmt = inflater.Inflate(Resource.Layout.right_menu, container, false);
+            searchView = searchFragmt.FindViewById<SearchView>(Resource.Id.searchView);
+            searchList = searchFragmt.FindViewById<ListView>(Resource.Id.listViewToSearchView);
 
-                #region DateEdit
-                date_text_edit1 = searchFragmt.FindViewById<EditText>(Resource.Id.text_edit1);
-                date_text_edit2 = searchFragmt.FindViewById<EditText>(Resource.Id.text_edit2);
-                //text_edit1.Text = DateTime.Now.ToShortDateString();
-                //text_edit2.Text = DateTime.Now.ToShortDateString();
-                date_text_edit1.TextChanged += Text_edit1_TextChanged;
-                date_text_edit2.TextChanged += Text_edit2_TextChanged;
+           
+            var sprop = FiltredList.Select(x => x.GetType().GetProperty(SearchProperName).GetValue(x, null)).Distinct().ToList();
+            adp1 = new ArrayAdapter(this.Context, Android.Resource.Layout.SimpleListItem1, sprop);
+            searchList.Adapter = adp1;
+            adp1.Filter.InvokeFilter("!@$#$^%&%^*&^(*&(*&)(*(&*&^(*^%&$&^#^%#&$"); //todo
+            searchView.QueryTextChange += Sv1_QueryTextChange;
+            searchView.FocusChange += Sv1_FocusChange;
+            searchList.ItemClick += Lv1_ItemClick;
+            #endregion
 
-                btn_calendar1 = searchFragmt.FindViewById<Button>(Resource.Id.btn_calendar1);
-                btn_calendar2 = searchFragmt.FindViewById<Button>(Resource.Id.btn_calendar2);
-                btn_clear_clear1 = searchFragmt.FindViewById<Button>(Resource.Id.btn_clear_clear1);
-                btn_clear_clear2 = searchFragmt.FindViewById<Button>(Resource.Id.btn_clear_clear2);
+            #region DateEdit
+            date_text_edit1 = searchFragmt.FindViewById<EditText>(Resource.Id.text_edit1);
+            date_text_edit2 = searchFragmt.FindViewById<EditText>(Resource.Id.text_edit2);
+            //text_edit1.Text = DateTime.Now.ToShortDateString();
+            //text_edit2.Text = DateTime.Now.ToShortDateString();
+            date_text_edit1.TextChanged += Text_edit1_TextChanged;
+            date_text_edit2.TextChanged += Text_edit2_TextChanged;
 
-                btn_calendar1.Click += Btn_calendar1_Click;
-                btn_calendar2.Click += Btn_calendar2_Click;
-                btn_clear_clear1.Click += Btn_clear_clear1_Click;
-                btn_clear_clear2.Click += Btn_clear_clear2_Click;
+            btn_calendar1 = searchFragmt.FindViewById<Button>(Resource.Id.btn_calendar1);
+            btn_calendar2 = searchFragmt.FindViewById<Button>(Resource.Id.btn_calendar2);
+            btn_clear_clear1 = searchFragmt.FindViewById<Button>(Resource.Id.btn_clear_clear1);
+            btn_clear_clear2 = searchFragmt.FindViewById<Button>(Resource.Id.btn_clear_clear2);
 
-                #endregion
+            btn_calendar1.Click += Btn_calendar1_Click;
+            btn_calendar2.Click += Btn_calendar2_Click;
+            btn_clear_clear1.Click += Btn_clear_clear1_Click;
+            btn_clear_clear2.Click += Btn_clear_clear2_Click;
 
-                #region OKClearButton
-                btn_Ok = searchFragmt.FindViewById<Button>(Resource.Id.btn_Ok);
-                btn_Clear = searchFragmt.FindViewById<Button>(Resource.Id.btn_Clear);
+            #endregion
 
-                btn_Ok.Click += Btn_Ok_Click;
-                btn_Clear.Click += Btn_Clear_Click;
-                #endregion
+            #region OKClearButton
+            btn_Ok = searchFragmt.FindViewById<Button>(Resource.Id.btn_Ok);
+            btn_Clear = searchFragmt.FindViewById<Button>(Resource.Id.btn_Clear);
 
-                // Use this to return your custom view for this Fragment
-                return searchFragmt;
+            btn_Ok.Click += Btn_Ok_Click;
+            btn_Clear.Click += Btn_Clear_Click;
+            #endregion
+
+            // Use this to return your custom view for this Fragment
+            return searchFragmt;
         }
 
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-      
+
         }
 
 
@@ -130,7 +153,7 @@ namespace NavigationDrawerStarter.Fragments
         {
             new DatePickerFragment(delegate (DateTime time)
             {
-               var _selectedDate = time;
+                var _selectedDate = time;
                 date_text_edit1.Text = "";
                 date_text_edit1.Text = _selectedDate.ToLongDateString();
             })
@@ -158,7 +181,7 @@ namespace NavigationDrawerStarter.Fragments
         }
         private void Sv1_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
         {
-            if (sv1.Query != "")
+            if (searchView.Query != "")
             {
                 // lv1.Visibility = ViewStates.Visible;
                 adp1.Filter.InvokeFilter(e.NewText);
@@ -172,10 +195,10 @@ namespace NavigationDrawerStarter.Fragments
         }
         private void Lv1_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            sv1.SetQuery(lv1.GetItemAtPosition(e.Position).ToString(), true);
-            lv1.Visibility = ViewStates.Gone;
+            searchView.SetQuery(searchList.GetItemAtPosition(e.Position).ToString(), true);
+            searchList.Visibility = ViewStates.Gone;
         }
-        public List<string> FiltredList
+        public List<T> FiltredList
         {
             get
             {
@@ -192,14 +215,14 @@ namespace NavigationDrawerStarter.Fragments
         #region OKClearButton
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
-            FilredResultList = new FilterItems(sv1, new[] { date_text_edit1, date_text_edit2 });
+            FilredResultList = new FilterItems(searchView, new[] { date_text_edit1, date_text_edit2 });
             OnSetFilters(this, e);
         }
         private void Btn_Clear_Click(object sender, EventArgs e)
         {
             FilredResultList = null;
 
-            sv1.SetQuery("",true);
+            searchView.SetQuery("", true);
             date_text_edit1.Text = "";
             date_text_edit2.Text = "";
 
@@ -210,15 +233,15 @@ namespace NavigationDrawerStarter.Fragments
 
 
     }
-    public class FilterItems
+    public class FilterItemsT
     {
-        public string SearchDiscriptions {get; private set;}
-        public string[] SearchDatas {get; private set;}
+        public string SearchDiscriptions { get; private set; }
+        public string[] SearchDatas { get; private set; }
 
-        public FilterItems(SearchView DiscriptionsSourse, EditText[] DatasSourse)
+        public FilterItemsT(SearchView DiscriptionsSourse, EditText[] DatasSourse)
         {
-            SearchDiscriptions =DiscriptionsSourse.Query;
-            SearchDatas = new[] { DatasSourse[0].Text, DatasSourse[1].Text }; 
+            SearchDiscriptions = DiscriptionsSourse.Query;
+            SearchDatas = new[] { DatasSourse[0].Text, DatasSourse[1].Text };
         }
     }
 }

@@ -13,6 +13,7 @@ using AndroidX.AppCompat.Widget;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
 using AndroidX.ViewPager2.Widget;
+using EfcToXamarinAndroid.Core;
 using Google.Android.Material.Badge;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
@@ -30,6 +31,7 @@ namespace NavigationDrawerStarter
     {
         DrawerLayout drawer;
         RightMenu _RightMenu;
+        RightMenuT<DataItem> _RightMenuT;
 
         private static int[] tabIcons;
 
@@ -224,6 +226,46 @@ namespace NavigationDrawerStarter
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
+
+            var test = DatesRepositorio.DataItems.Select(x => x.Descripton);
+            var test2 = DatesRepositorio.DataItems.Select(x => x.GetType().GetProperty("Descripton").GetValue(x, null));
+
+            #region FilterBtnClicTest
+            //if (id == Resource.Id.action_openRight)
+            //{
+            //    if (_RightMenu == null)
+            //    {
+            //        DataItem props = null;
+                    
+            //        _RightMenuT = new RightMenuT<DataItem>("Descripton", "Date", new string[] {"Id", "HashId", "Balance"});
+            //        _RightMenuT.FiltredList = DatesRepositorio.DataItems;
+                    
+
+            //        var filterFragmentTransaction = SupportFragmentManager.BeginTransaction();
+            //        filterFragmentTransaction.Add(Resource.Id.MenuFragmentFrame, _RightMenuT, "MENU");
+            //        filterFragmentTransaction.Commit();
+            //        //_RightMenuT.FiltredList = DatesRepositorio.DataItems.Select(x => x.Descripton).ToList<string>();
+            //        drawer.OpenDrawer(GravityCompat.End);
+
+            //        //_RightMenu.SetFilters += (object sender, EventArgs e) =>
+            //        //{
+            //        //    var filter = ((RightMenu)sender).FilredResultList;
+            //        //    drawer.CloseDrawer(GravityCompat.End);
+            //        //    //drawer.SetDrawerLockMode(DrawerLayout.LockModeLockedClosed);
+            //        //    var fltr = DatesRepositorio.MFilter;
+            //        //    fltr.GetResult(x => x.Descripton.Contains("TEST"));
+            //        //    adapter.UpdateFragments();
+            //        //};
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        drawer.OpenDrawer(GravityCompat.End);
+            //    }
+            //}
+            #endregion
+
+
             #region FilterBtnClic
             if (id == Resource.Id.action_openRight)
             {
@@ -243,7 +285,7 @@ namespace NavigationDrawerStarter
                         drawer.CloseDrawer(GravityCompat.End);
                         //drawer.SetDrawerLockMode(DrawerLayout.LockModeLockedClosed);
                         var fltr = DatesRepositorio.MFilter;
-                        var sd = fltr.GetResult(x => x.Descripton.Contains("TEST"));
+                        fltr.GetResult(x => x.Descripton.Contains("TEST"));
                         adapter.UpdateFragments();
                     };
                     return true;

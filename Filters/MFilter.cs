@@ -17,6 +17,7 @@ namespace NavigationDrawerStarter.Filters
     {
         public IEnumerable<DataItem> InDataItems { private get; set; }
         public List<DataItem> OutDataItems { get; private set; }
+        private DataItem FilterModel { get; set; }
         public int Count { get; }
 
         public MFilter(List<DataItem> inDataItems)
@@ -31,8 +32,6 @@ namespace NavigationDrawerStarter.Filters
             OnFiltredClose(this);
             return OutDataItems;
         }
-
-
 
         public delegate void EventHandler(object sender);
         public event EventHandler FiltredClose;

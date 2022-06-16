@@ -11,7 +11,7 @@ namespace NavigationDrawerStarter
 {
     public static class DatesRepositorio
     {
-        public static List<DataItem> DataItems { get; private set; }
+        public static  List<DataItem> DataItems { get; private set; }
         public static int NewDataItemsCount { get; private set; }
         public static List<DataItem> NewDataItems { get; set; }//will muve  
 

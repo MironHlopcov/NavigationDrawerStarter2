@@ -90,11 +90,16 @@
             android:background="@android:drawable/ic_delete"
             android:visibility="gone" />
     </FrameLayout>
-   
+
+
+
+
+
     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:gravity="top">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="horizontal">
         <Button
             android:text="Ok"
             android:layout_width="wrap_content"
@@ -106,9 +111,9 @@
             android:text="Clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:minWidth="25px"
+            android:minWidth="25px"
             android:minHeight="25px"
             android:id="@+id/btn_Clear" />
-    
+
     </LinearLayout>
 </LinearLayout>
