@@ -4,6 +4,8 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Fragment.App;
+using NavigationDrawerStarter.Filters;
+using NavigationDrawerStarter.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +32,16 @@ namespace NavigationDrawerStarter.Fragments
         private Button btn_Clear;
 
         ArrayAdapter adp1;
+
+        #region ExpandableList
+        private ExpandableListAdapter listAdapter;
+        private ExpandableListView expandableList;
+        //private List<string> listHeaderData;
+        private Dictionary<ExpandableGroupModel, List<ExpandableChildModel>> listChildData;
+        //private List<ExpandableChildModel> groupData;
+        #endregion
+
+
         private List<string> _FiltredList;
         public FilterItems FilredResultList { get; private set; }
 
@@ -43,7 +55,8 @@ namespace NavigationDrawerStarter.Fragments
 
         public RightMenu()
         {
-            _FiltredList = new List<string>(); 
+            _FiltredList = new List<string>();
+            listChildData = new Dictionary<ExpandableGroupModel, List<ExpandableChildModel>>();
         }
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -83,10 +96,16 @@ namespace NavigationDrawerStarter.Fragments
                 btn_clear_clear1.Click += Btn_clear_clear1_Click;
                 btn_clear_clear2.Click += Btn_clear_clear2_Click;
 
-                #endregion
+            #endregion
 
-                #region OKClearButton
-                btn_Ok = searchFragmt.FindViewById<Button>(Resource.Id.btn_Ok);
+            #region ExpandableList
+            expandableList = searchFragmt.FindViewById(Resource.Id.expandList) as ExpandableListView;
+            listAdapter = new ExpandableListAdapter(Activity, listChildData);
+            expandableList.SetAdapter(listAdapter);
+            #endregion
+
+            #region OKClearButton
+            btn_Ok = searchFragmt.FindViewById<Button>(Resource.Id.btn_Ok);
                 btn_Clear = searchFragmt.FindViewById<Button>(Resource.Id.btn_Clear);
 
                 btn_Ok.Click += Btn_Ok_Click;
@@ -97,6 +116,17 @@ namespace NavigationDrawerStarter.Fragments
                 return searchFragmt;
         }
 
+        public void AddChekFilterItem(string groupName, List<string> childItems)
+        {
+            List<ExpandableChildModel> groupData = new List<ExpandableChildModel>();
+            foreach (string item in childItems)
+            {
+                if (item != "0")
+                    groupData.Add(new ExpandableChildModel(item));
+            }
+            listChildData.Add(new ExpandableGroupModel { Name = groupName, IsCheked = false }, groupData);
+
+        }
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
@@ -192,7 +222,7 @@ namespace NavigationDrawerStarter.Fragments
         #region OKClearButton
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
-            FilredResultList = new FilterItems(sv1, new[] { date_text_edit1, date_text_edit2 });
+            FilredResultList = new FilterItems(sv1.Query, new[] { date_text_edit1.Text, date_text_edit2.Text }, listAdapter);
             OnSetFilters(this, e);
         }
         private void Btn_Clear_Click(object sender, EventArgs e)
@@ -202,6 +232,7 @@ namespace NavigationDrawerStarter.Fragments
             sv1.SetQuery("",true);
             date_text_edit1.Text = "";
             date_text_edit2.Text = "";
+           // listAdapter.; to do
 
             OnSetFilters(this, e);
 
@@ -213,12 +244,17 @@ namespace NavigationDrawerStarter.Fragments
     public class FilterItems
     {
         public string SearchDiscriptions {get; private set;}
-        public string[] SearchDatas {get; private set;}
+        public DateTime[] SearchDatas {get; private set;}
+        public ExpandableListAdapter ExpandableListAdapter { get; private set; }
 
-        public FilterItems(SearchView DiscriptionsSourse, EditText[] DatasSourse)
+        public FilterItems(string DiscriptionsSourse, string[] DatasSourse, ExpandableListAdapter expandableListAdapter)
         {
-            SearchDiscriptions =DiscriptionsSourse.Query;
-            SearchDatas = new[] { DatasSourse[0].Text, DatasSourse[1].Text }; 
+            SearchDiscriptions =DiscriptionsSourse;
+            DateTime d1= DateTime.TryParse(DatasSourse[0], out d1) ? d1: default;
+            DateTime d2;
+            DateTime.TryParse(DatasSourse[1], out d2);
+            SearchDatas = new[] { d1, d2 };
+            ExpandableListAdapter = expandableListAdapter;
         }
     }
 }

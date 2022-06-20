@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="62dp">
+   <CheckBox
+        android:id="@+id/cb_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:layout_marginLeft="20dp"
+        android:paddingTop="35dp"
+        android:paddingRight="23dp"
+        android:layout_alignParentLeft="true"/>
+    <TextView
+        android:id="@+id/txtHeaderText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text"
+        android:paddingTop="0dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="68dp"
+        android:ellipsize="end"
+       
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:paddingRight="3dp"
+        android:layout_toLeftOf="@+id/imagearrow"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
+    <ImageView
+        android:id="@+id/imagearrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/group_indicator"
+       android:paddingTop="@dimen/material_clock_hand_center_dot_radius"
+        android:paddingRight="23dp"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
+

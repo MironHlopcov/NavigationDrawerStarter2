@@ -4,6 +4,8 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Fragment.App;
+using NavigationDrawerStarter.Filters;
+using NavigationDrawerStarter.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,19 +54,52 @@ namespace NavigationDrawerStarter.Fragments
             handler?.Invoke(this, e);
         }
 
-        public RightMenuT(string searchProperName, string datePropName, string[] unvisibleProps)
+
+        private ExpandableListAdapter listAdapter;
+        private ExpandableListView expandableList;
+        private List<string> listHeaderData;
+        private Dictionary<ExpandableGroupModel, List<ExpandableChildModel>> listChildData;
+        private List<ExpandableChildModel> groupData;
+
+        public RightMenuT(string searchProperName, string datePropName, string[] unvisibleProps, List<T> filtredList)
         {
+            _FiltredList = new List<T>();
+
             SearchProperName = searchProperName;
             DatePropName = datePropName;
-            UnvisibleProps= unvisibleProps;   
+            UnvisibleProps= unvisibleProps;
+            FiltredList = filtredList;
+           
+
+            listChildData = new Dictionary<ExpandableGroupModel, List<ExpandableChildModel>>();
+            List<ExpandableChildModel> chldrnList = new List<ExpandableChildModel>();
 
             var propertis = typeof(T).GetProperties();
             foreach (var prop in propertis)
             {
+                if(UnvisibleProps.Contains(prop.Name))
+                    continue;
+                
 
+                var propName = typeof(T).GetProperty(prop.Name);
+                var propValues = FiltredList.Select(x => x.GetType().GetProperty(prop.Name).GetValue(x, null).ToString()).Distinct();
+
+                foreach (var child in propValues)
+                {
+                    chldrnList.Add(new ExpandableChildModel(child));
+                }
+
+                listChildData.Add(new ExpandableGroupModel(prop.Name), chldrnList);
+
+                //var dfgh = FiltredList.GetType().GetProperty(prop.Name);
+                //var asdfasdf = _FiltredList.Select(x=>x.GetType().GetProperty(prop.Name)).ToList();
+                //var sdfg = _FiltredList.Select(x => typeof(T).GetProperty(prop.Name));
+                //chldrnList.AddRange(typeof(T));
+
+                //listChildData.Add(new ExpandableGroupModel(prop.Name), new  )
             }
 
-            _FiltredList = new List<T>();
+            
         }
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -198,24 +233,13 @@ namespace NavigationDrawerStarter.Fragments
             searchView.SetQuery(searchList.GetItemAtPosition(e.Position).ToString(), true);
             searchList.Visibility = ViewStates.Gone;
         }
-        public List<T> FiltredList
-        {
-            get
-            {
-                return _FiltredList;
-            }
-            set
-            {
-                _FiltredList?.Clear();
-                _FiltredList.AddRange(value);
-            }
-        }
+      
         #endregion
 
         #region OKClearButton
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
-            FilredResultList = new FilterItems(searchView, new[] { date_text_edit1, date_text_edit2 });
+            FilredResultList = new FilterItems(searchView.Query, new[] { date_text_edit1.Text, date_text_edit2.Text }, listAdapter);
             OnSetFilters(this, e);
         }
         private void Btn_Clear_Click(object sender, EventArgs e)
@@ -231,6 +255,20 @@ namespace NavigationDrawerStarter.Fragments
         }
         #endregion
 
+
+
+        public List<T> FiltredList
+        {
+            get
+            {
+                return _FiltredList;
+            }
+            set
+            {
+                _FiltredList?.Clear();
+                _FiltredList.AddRange(value);
+            }
+        }
 
     }
     public class FilterItemsT

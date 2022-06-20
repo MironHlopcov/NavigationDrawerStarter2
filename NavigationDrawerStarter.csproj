@@ -73,11 +73,14 @@
     <Compile Include="Configs\ManagerCore\ConfigurationManager.cs" />
     <Compile Include="DatesRepositorio.cs" />
     <Compile Include="Enums\CategoryTyps.cs" />
+    <Compile Include="Filters\ExpandableListAdapter.cs" />
     <Compile Include="Filters\MFilter.cs" />
     <Compile Include="Fragments\DatePickerFragment.cs" />
     <Compile Include="Fragments\RightMenuT.cs" />
     <Compile Include="Fragments\RightMenu.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Models\ExpandableChildModel.cs" />
+    <Compile Include="Models\ExpandableGroupModel.cs" />
     <Compile Include="Models\PdfReportTemplate.cs" />
     <Compile Include="Models\Sms.cs" />
     <Compile Include="Models\SmsParseRegex.cs" />
@@ -212,6 +215,30 @@
       <Project>{e597fe7c-e43e-4604-80e1-36af3754d4b5}</Project>
       <Name>EfcToXamarinAndroid.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\expand_list_chlid.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\list_view_header.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\computericon_one.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\down_arrow_one.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\up_arrow_one.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\group_indicator.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -236,10 +236,10 @@ namespace NavigationDrawerStarter
             //    if (_RightMenu == null)
             //    {
             //        DataItem props = null;
-                    
-            //        _RightMenuT = new RightMenuT<DataItem>("Descripton", "Date", new string[] {"Id", "HashId", "Balance"});
+
+            //        _RightMenuT = new RightMenuT<DataItem>("Descripton", "Date", new string[] { "Id", "HashId", "Balance" }, DatesRepositorio.DataItems);
             //        _RightMenuT.FiltredList = DatesRepositorio.DataItems;
-                    
+
 
             //        var filterFragmentTransaction = SupportFragmentManager.BeginTransaction();
             //        filterFragmentTransaction.Add(Resource.Id.MenuFragmentFrame, _RightMenuT, "MENU");
@@ -277,11 +277,35 @@ namespace NavigationDrawerStarter
                     filterFragmentTransaction.Add(Resource.Id.MenuFragmentFrame, _RightMenu, "MENU");
                     filterFragmentTransaction.Commit();
                     _RightMenu.FiltredList = DatesRepositorio.DataItems.Select(x=>x.Descripton).ToList<string>();
+                   
+                    _RightMenu.AddChekFilterItem("Карта", DatesRepositorio.DataItems.Select(x => x.Karta.ToString()).Distinct().ToList());
+                    _RightMenu.AddChekFilterItem("Категория по умолчанию", DatesRepositorio.DataItems.Select(x => x.DefaultCategoryTyps.ToString()).Distinct().ToList());
+                    _RightMenu.AddChekFilterItem("Пользовательская категория", DatesRepositorio.DataItems.Select(x => x.CastomCategoryTyps.ToString()).Distinct().ToList());
+
                     drawer.OpenDrawer(GravityCompat.End);
 
                     _RightMenu.SetFilters += (object sender, EventArgs e) =>
                     {
+
                         var filter = ((RightMenu)sender).FilredResultList;
+
+                        if (filter.SearchDatas[1] == default)
+                            return;
+                       
+
+                        var filterExtension = DatesRepositorio.DataItems.Where(x => (filter.SearchDatas[0] == default ?
+                                                                        x.Date > DateTime.MinValue :(
+                                                                        filter.SearchDatas[1] == default ?
+                                                                        x.Date == filter.SearchDatas[0] :
+                                                                        x.Date > filter.SearchDatas[0] &&
+                                                                        x.Date < filter.SearchDatas[1]))).ToArray();
+
+                        //var filterExtension = DatesRepositorio.DataItems.Where(x => x.Descripton == filter.SearchDiscriptions)
+                        //                                                .Where(x => filter.SearchDatas[1] == null?
+                        //                                                x.Date == DateTime.Parse(filter.SearchDatas[0]):
+                        //                                                x.Date > DateTime.Parse(filter.SearchDatas[0])&&
+                        //                                                x.Date < DateTime.Parse(filter.SearchDatas[1])).ToArray();
+
                         drawer.CloseDrawer(GravityCompat.End);
                         //drawer.SetDrawerLockMode(DrawerLayout.LockModeLockedClosed);
                         var fltr = DatesRepositorio.MFilter;
