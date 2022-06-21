@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using Android.OS;
@@ -21,6 +22,7 @@ using Google.Android.Material.Snackbar;
 using Google.Android.Material.Tabs;
 using NavigationDrawerStarter.Configs.ManagerCore;
 using NavigationDrawerStarter.Fragments;
+using NavigationDrawerStarter.Models;
 using NavigationDrawerStarter.Parsers;
 using Xamarin.Essentials;
 
@@ -276,7 +278,7 @@ namespace NavigationDrawerStarter
                     var filterFragmentTransaction = SupportFragmentManager.BeginTransaction();
                     filterFragmentTransaction.Add(Resource.Id.MenuFragmentFrame, _RightMenu, "MENU");
                     filterFragmentTransaction.Commit();
-                    _RightMenu.FiltredList = DatesRepositorio.DataItems.Select(x=>x.Descripton).ToList<string>();
+                    _RightMenu.FiltredList = DatesRepositorio.DataItems.Select(x=>x.Descripton).Distinct().ToList<string>();
                    
                     _RightMenu.AddChekFilterItem("Карта", DatesRepositorio.DataItems.Select(x => x.Karta.ToString()).Distinct().ToList());
                     _RightMenu.AddChekFilterItem("Категория по умолчанию", DatesRepositorio.DataItems.Select(x => x.DefaultCategoryTyps.ToString()).Distinct().ToList());
@@ -289,27 +291,71 @@ namespace NavigationDrawerStarter
 
                         var filter = ((RightMenu)sender).FilredResultList;
 
-                        if (filter.SearchDatas[1] == default)
-                            return;
-                       
+                        #region Test
+                        //var filterExtension = DatesRepositorio.DataItems.Where(x => filter.SearchDiscriptions == "" ? true : x.Descripton == filter.SearchDiscriptions)
+                        //                                                .Where(x => filter.SearchDatas[0] == default ?
+                        //                                                x.Date.Date > DateTime.MinValue : (
+                        //                                                filter.SearchDatas[1] == default ?
+                        //                                                x.Date.Date == filter.SearchDatas[0] :
+                        //                                                x.Date.Date > filter.SearchDatas[0] &&
+                        //                                                x.Date.Date < filter.SearchDatas[1])).ToArray();
 
-                        var filterExtension = DatesRepositorio.DataItems.Where(x => (filter.SearchDatas[0] == default ?
-                                                                        x.Date > DateTime.MinValue :(
+
+                        //var fval = filter.ExpandableListAdapter.childList;
+                        //foreach (var item in fval)
+                        //{
+                        //    if (item.Value.Count == 0)
+                        //        continue;
+
+                        //    switch (item.Key.Name)
+                        //    {
+                        //        case "Карта":
+                        //            filterExtension = filterExtension.Where(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.Karta.ToString())).ToArray();
+                        //            break;
+                        //        case "Категория по умолчанию":
+                        //            filterExtension = filterExtension.Where(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.DefaultCategoryTyps.ToString())).ToArray();
+                        //            break;
+                        //        case "Пользовательская категория":
+                        //            filterExtension = filterExtension.Where(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.CastomCategoryTyps.ToString())).ToArray();
+                        //            break;
+
+
+                        //    }
+
+
+                        //}
+                        #endregion
+
+                        var fltr = DatesRepositorio.MFilter;
+                        fltr.GetResult(x => filter.SearchDiscriptions == "" ? true : x.Descripton == filter.SearchDiscriptions);
+                        fltr.GetResult(x => filter.SearchDatas[0] == default ?
+                                                                        x.Date.Date > DateTime.MinValue : (
                                                                         filter.SearchDatas[1] == default ?
-                                                                        x.Date == filter.SearchDatas[0] :
-                                                                        x.Date > filter.SearchDatas[0] &&
-                                                                        x.Date < filter.SearchDatas[1]))).ToArray();
+                                                                        x.Date.Date == filter.SearchDatas[0] :
+                                                                        x.Date.Date > filter.SearchDatas[0] &&
+                                                                        x.Date.Date < filter.SearchDatas[1]));
 
-                        //var filterExtension = DatesRepositorio.DataItems.Where(x => x.Descripton == filter.SearchDiscriptions)
-                        //                                                .Where(x => filter.SearchDatas[1] == null?
-                        //                                                x.Date == DateTime.Parse(filter.SearchDatas[0]):
-                        //                                                x.Date > DateTime.Parse(filter.SearchDatas[0])&&
-                        //                                                x.Date < DateTime.Parse(filter.SearchDatas[1])).ToArray();
+                        var chLi = filter.ExpandableListAdapter.childList;
+                        foreach (var item in chLi)
+                        {
+                            if (!item.Key.IsCheked)
+                                continue;
+
+                            switch (item.Key.Name)
+                            {
+                                case "Карта":
+                                    fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.Karta.ToString())).ToArray();
+                                    break;
+                                case "Категория по умолчанию":
+                                    fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.DefaultCategoryTyps.ToString())).ToArray();
+                                    break;
+                                case "Пользовательская категория":
+                                    fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.CastomCategoryTyps.ToString())).ToArray();
+                                    break;
+                            }
+                        }
 
                         drawer.CloseDrawer(GravityCompat.End);
-                        //drawer.SetDrawerLockMode(DrawerLayout.LockModeLockedClosed);
-                        var fltr = DatesRepositorio.MFilter;
-                        fltr.GetResult(x => x.Descripton.Contains("TEST"));
                         adapter.UpdateFragments();
                     };
                     return true;

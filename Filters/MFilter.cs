@@ -27,7 +27,10 @@ namespace NavigationDrawerStarter.Filters
 
         public List<DataItem> GetResult(Expression<Func<DataItem, bool>> dataItemFilter)
         {
-            IEnumerable<DataItem> query = InDataItems.AsQueryable().Where(dataItemFilter);
+            IEnumerable<DataItem> query;
+            if (OutDataItems == null)
+                query = InDataItems.AsQueryable().Where(dataItemFilter);
+            else query = OutDataItems.AsQueryable().Where(dataItemFilter);
             OutDataItems = query.ToList();
             OnFiltredClose(this);
             return OutDataItems;

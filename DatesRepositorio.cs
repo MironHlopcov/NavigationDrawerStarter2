@@ -87,8 +87,10 @@ namespace NavigationDrawerStarter
         {
             Payments.Clear();
             Payments.AddRange(GetPayments(dataItems));
+
             Deposits.Clear();
             Deposits.AddRange(GetDeposits(dataItems));
+
             Cashs.Clear();
             Cashs.AddRange(GetCashs(dataItems));
         }

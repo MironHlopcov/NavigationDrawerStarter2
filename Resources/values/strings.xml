@@ -6,5 +6,7 @@
 	<string name="search_title">Search...</string>
 	<string name="filters_form_title">Filters</string>
 	<string name="select_pdf_report">Please select a pdf report file</string>
-	
+	<string name="exp_filterItem_1">Карта</string>
+	<string name="exp_filterItem_2">Категория по умолчанию</string>
+	<string name="exp_filterItem_3">Пользовательская категория</string>
 </resources>

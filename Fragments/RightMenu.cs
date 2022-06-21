@@ -47,9 +47,16 @@ namespace NavigationDrawerStarter.Fragments
 
         public delegate void EventHandler(object sender, EventArgs e);
         public event EventHandler SetFilters;
+        public event EventHandler ClousFilter;
+
         protected virtual void OnSetFilters(object sender, EventArgs e)
         {
             EventHandler handler = SetFilters;
+            handler?.Invoke(this, e);
+        }
+        protected virtual void OnClousFilter(object sender, EventArgs e)
+        {
+            EventHandler handler = ClousFilter;
             handler?.Invoke(this, e);
         }
 
@@ -219,7 +226,7 @@ namespace NavigationDrawerStarter.Fragments
         }
         #endregion
 
-        #region OKClearButton
+        #region OnButtonClick
         private void Btn_Ok_Click(object sender, EventArgs e)
         {
             FilredResultList = new FilterItems(sv1.Query, new[] { date_text_edit1.Text, date_text_edit2.Text }, listAdapter);
@@ -232,8 +239,13 @@ namespace NavigationDrawerStarter.Fragments
             sv1.SetQuery("",true);
             date_text_edit1.Text = "";
             date_text_edit2.Text = "";
-           // listAdapter.; to do
-
+            foreach (var item in listChildData)
+            {
+                item.Key.IsCheked = false;
+                item.Value.ForEach(i => i.IsCheked = false);
+            }
+            listAdapter.NotifyDataSetChanged();
+            FilredResultList = new FilterItems(sv1.Query, new[] { date_text_edit1.Text, date_text_edit2.Text }, listAdapter);
             OnSetFilters(this, e);
 
         }
