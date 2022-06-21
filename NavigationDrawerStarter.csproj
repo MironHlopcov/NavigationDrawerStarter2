@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="CastomTabs\CustomStrategy.cs" />
     <Compile Include="CastomTabs\CustomViewPager2Adapter.cs" />
+    <Compile Include="Configs\ManagerCore\MccConfiguration.cs" />
     <Compile Include="DataAdapter.cs" />
     <Compile Include="CastomTabs\ViewPage2Fragment.cs" />
     <Compile Include="Configs\ManagerCore\AppConfiguration.cs" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Configs\ConfigBank.json" />
+    <EmbeddedResource Include="Configs\ConfigMcc.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />

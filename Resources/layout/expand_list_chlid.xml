@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="false"
-        android:layout_marginLeft="40dp"
-        android:paddingTop="35dp"
+        android:layout_marginLeft="14dp"
         android:paddingRight="23dp"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+         android:layout_centerVertical="true"/>
     <TextView
         android:id="@+id/txtChildText"
         android:layout_width="match_parent"
@@ -27,7 +27,8 @@
         android:gravity="center_vertical"
         android:maxLines="1"
         android:layout_toLeftOf="@+id/imageortext"
-         android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"/>
     <ImageView
         android:id="@+id/imageortext"
         android:layout_width="wrap_content"

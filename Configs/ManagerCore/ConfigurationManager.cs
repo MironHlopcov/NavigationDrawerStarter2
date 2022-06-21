@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -38,7 +39,7 @@ namespace NavigationDrawerStarter.Configs.ManagerCore
             }
 
             var configs = JsonConvert.DeserializeObject<AppConfiguration>(jsonFile);
-
+            //var mccCodes = JsonConvert.DeserializeObject<Dictionary<int, string>>(jsonFile);
             return configs;
         }
     }

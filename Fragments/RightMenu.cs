@@ -161,7 +161,7 @@ namespace NavigationDrawerStarter.Fragments
         }
         private void Btn_clear_clear2_Click(object sender, EventArgs e)
         {
-            date_text_edit1.Text = "";
+            date_text_edit2.Text = "";
         }
         private void Btn_calendar1_Click(object sender, EventArgs e)
         {
@@ -200,6 +200,7 @@ namespace NavigationDrawerStarter.Fragments
                 // lv1.Visibility = ViewStates.Visible;
                 adp1.Filter.InvokeFilter(e.NewText);
                 //sv1.Iconified = false;
+                lv1.Visibility = ViewStates.Visible;
             }
             else
             {
