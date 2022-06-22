@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp">
-    <TextView
-        android:id="@+id/tituloTextView"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sum_TextView"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:textSize="15dp"
-   />
-    <TextView
-        android:id="@+id/diretorTextView"
-        android:layout_width="match_parent"
+        android:textSize="15dp"/>
+    <Linearlayout
         android:layout_height="wrap_content"
-        android:textColor="#00A14B"
-        android:layout_weight="70" />
-    <TextView
-        android:id="@+id/dataLancamentoTextView"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/sum_TextView"
+        android:layout_toLeftOf="@id/data_TextView">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/deskription_TextView"
+            android:text="12341234123qwerqwerqwer41234123412341234"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#00A14B"
+            android:ellipsize="end"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:inputType="text"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mcc_code_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/deskription_TextView"
+            android:textColor="#00A14B"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+    </Linearlayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/data_TextView"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd = "true"
         android:textColor="#7F3F97"
-        android:paddingLeft="5dp"
-        android:gravity="end"
-        android:layout_gravity="end" />
-</LinearLayout>
+        android:ellipsize="end"
+        android:maxLines="1"/>
+</RelativeLayout>

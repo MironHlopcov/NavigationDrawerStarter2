@@ -65,9 +65,10 @@ namespace NavigationDrawerStarter
         {
             var view = convertView ?? context.LayoutInflater.Inflate(Resource.Layout.list_item, parent, false);// inflate the xml for each item
 
-            var txtTitulo = view.FindViewById<TextView>(Resource.Id.tituloTextView);
-            var txtDiretor = view.FindViewById<TextView>(Resource.Id.diretorTextView);
-            var txtLancamento = view.FindViewById<TextView>(Resource.Id.dataLancamentoTextView);
+            var txtTitulo = view.FindViewById<TextView>(Resource.Id.sum_TextView);
+            var txtDiretor = view.FindViewById<TextView>(Resource.Id.deskription_TextView);
+            //txtDiretor.Ellipsize = Android.Text.TextUtils.TruncateAt.End;
+            var txtLancamento = view.FindViewById<TextView>(Resource.Id.data_TextView);
 
             txtTitulo.Text = dataItems[position].Sum.ToString();
             txtDiretor.Text = dataItems[position].Descripton;

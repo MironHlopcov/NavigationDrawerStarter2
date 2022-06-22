@@ -11,5 +11,6 @@
         Clothing = 7,
         Taxi = 8,
         PublicTransport = 9,
+        Test=10
     }
 }
