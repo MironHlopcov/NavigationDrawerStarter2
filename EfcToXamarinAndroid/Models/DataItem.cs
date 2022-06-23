@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EfcToXamarinAndroid.Core
 {
@@ -22,6 +23,9 @@ namespace EfcToXamarinAndroid.Core
         public CategoryTyps CastomCategoryTyps { get; private set; }
         public List<SybCategory>? SubCategorys { get; private set; }
 
+        [NotMapped]
+        public string MccDeskription { get; set; }
+
 
 
         public DataItem(OperacionTyps operacionTyp, DateTime dateTime)
@@ -30,7 +34,7 @@ namespace EfcToXamarinAndroid.Core
             OperacionTyp = operacionTyp;
             //not overflov to 16/11/3169 09:46:40
             //HashId = (long)((int)operacionTyp * 1000000000000000000) + dateTime.Ticks;
-            HashId = dateTime.Ticks-(dateTime.Ticks % TimeSpan.TicksPerSecond);
+            HashId = dateTime.Ticks - (dateTime.Ticks % TimeSpan.TicksPerSecond);
         }
         public DataItem()
         {
@@ -40,6 +44,16 @@ namespace EfcToXamarinAndroid.Core
         {
             return $"{Sum} {Descripton} {Date} ";
         }
+
+        //public void SetMccDeskription(string deskription)
+        //{
+        //    mccDeskription = deskription;
+        //}
+        //public string GetMccDeskription()
+        //{
+        //    return mccDeskription;
+        //}
+
 
 
     }

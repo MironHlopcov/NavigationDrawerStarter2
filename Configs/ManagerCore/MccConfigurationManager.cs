@@ -6,30 +6,30 @@ using System.Reflection;
 
 namespace NavigationDrawerStarter.Configs.ManagerCore
 {
-    public sealed class ConfigurationManager
+    public sealed class MccConfigurationManager
     {
         /// <summary>
         /// holds a reference to the single created instance, if any.
         /// </summary>
-        private static readonly Lazy<ConfigurationManager> lazy = new Lazy<ConfigurationManager>(() => new ConfigurationManager());
+        private static readonly Lazy<MccConfigurationManager> lazy = new Lazy<MccConfigurationManager>(() => new MccConfigurationManager());
 
         /// <summary>
         /// Getting reference to the single created instance, creating one if necessary.
         /// </summary>
-        public static ConfigurationManager ConfigManager { get; } = lazy.Value;
+        public static MccConfigurationManager ConfigManager { get; } = lazy.Value;
 
-        public AppConfiguration BankConfigurationFromJson { get; set; }
-        private ConfigurationManager()
+        public Dictionary<int, string> MccConfigurationFromJson { get; set; }
+        private MccConfigurationManager()
         {
-            BankConfigurationFromJson = this.Read();
+            MccConfigurationFromJson = this.Read();
         }
         /// <summary>
         /// Read the configuration files and return Configuration Object
         /// </summary>
-        private AppConfiguration Read()
+        private Dictionary<int, string> Read()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string resourceName = "NavigationDrawerStarter.Configs.ConfigBank.json";
+            string resourceName = "NavigationDrawerStarter.Configs.ConfigMcc.json";
             string jsonFile = "";
 
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -38,7 +38,7 @@ namespace NavigationDrawerStarter.Configs.ManagerCore
                 jsonFile = reader.ReadToEnd(); //Make string equal to full file
             }
 
-            var configs = JsonConvert.DeserializeObject<AppConfiguration>(jsonFile);
+            var configs = JsonConvert.DeserializeObject<Dictionary<int, string>>(jsonFile);
             //var mccCodes = JsonConvert.DeserializeObject<Dictionary<int, string>>(jsonFile);
             return configs;
         }

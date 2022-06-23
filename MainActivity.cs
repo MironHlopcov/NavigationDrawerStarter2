@@ -69,7 +69,7 @@ namespace NavigationDrawerStarter
 
             #region ConfigManager
             ConfigurationManager configManager = ConfigurationManager.ConfigManager;
-            var configuration = configManager.JSONConfiguration;
+            var configuration = configManager.BankConfigurationFromJson;
             #endregion
 
             #region ShowDataFromDb
@@ -180,7 +180,7 @@ namespace NavigationDrawerStarter
         {
             #region ConfigManager
             ConfigurationManager configManager = ConfigurationManager.ConfigManager;
-            var configuration = configManager.JSONConfiguration;
+            var configuration = configManager.BankConfigurationFromJson;
             #endregion
             try
             {
@@ -281,8 +281,12 @@ namespace NavigationDrawerStarter
                     _RightMenu.FiltredList = DatesRepositorio.DataItems.Select(x=>x.Descripton).Distinct().ToList<string>();
                    
                     _RightMenu.AddChekFilterItem("Карта", DatesRepositorio.DataItems.Select(x => x.Karta.ToString()).Distinct().ToList());
-                    _RightMenu.AddChekFilterItem("Категория по умолчанию", DatesRepositorio.DataItems.Select(x => x.DefaultCategoryTyps.ToString()).Distinct().ToList());
-                    _RightMenu.AddChekFilterItem("Пользовательская категория", DatesRepositorio.DataItems.Select(x => x.CastomCategoryTyps.ToString()).Distinct().ToList());
+                    //_RightMenu.AddChekFilterItem("Категория по умолчанию", DatesRepositorio.DataItems.Select(x => x.DefaultCategoryTyps.ToString()).Distinct().ToList());
+                    //_RightMenu.AddChekFilterItem("Пользовательская категория", DatesRepositorio.DataItems.Select(x => x.CastomCategoryTyps.ToString()).Distinct().ToList());
+
+                    _RightMenu.AddChekFilterItem("MCC код", DatesRepositorio.DataItems.Select(x => x.MCC.ToString()).Distinct().ToList());
+                    _RightMenu.AddChekFilterItem("MCC описание", DatesRepositorio.DataItems.Select(x => x.MccDeskription?.ToString()).Distinct().ToList());
+
 
                     drawer.OpenDrawer(GravityCompat.End);
 
@@ -334,7 +338,6 @@ namespace NavigationDrawerStarter
                                                                         x.Date.Date == filter.SearchDatas[0] :
                                                                         x.Date.Date > filter.SearchDatas[0] &&
                                                                         x.Date.Date < filter.SearchDatas[1]));
-
                         var chLi = filter.ExpandableListAdapter.childList;
                         foreach (var item in chLi)
                         {
@@ -352,9 +355,14 @@ namespace NavigationDrawerStarter
                                 case "Пользовательская категория":
                                     fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.CastomCategoryTyps.ToString())).ToArray();
                                     break;
+                                case "MCC код":
+                                    fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.MCC.ToString())).ToArray();
+                                    break;
+                                case "MCC описание":
+                                    fltr.GetResult(q => item.Value.Where(r => r.IsCheked).Select(w => w.Name).Contains(q.MccDeskription)).ToArray();
+                                    break;
                             }
                         }
-
                         drawer.CloseDrawer(GravityCompat.End);
                         adapter.UpdateFragments();
                     };

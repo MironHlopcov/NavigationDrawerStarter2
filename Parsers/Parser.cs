@@ -58,7 +58,7 @@ namespace NavigationDrawerStarter.Parsers
                         dataItem.Sum = float.TryParse(new Regex(BelarusbankSmsRegex.Sum).Match(msg).Value, NumberStyles.Any, ci, out float tempSum) ? tempSum : default;
                         dataItem.Balance = float.TryParse(new Regex(BelarusbankSmsRegex.Balance).Match(msg).Value, NumberStyles.Any, ci, out float tempBalance) ? tempBalance : default;
                         dataItem.Karta = int.TryParse(new Regex(BelarusbankSmsRegex.Karta).Match(msg).Value, NumberStyles.Any, ci, out int tempKarta) ? tempKarta : default;
-
+                        dataItem.MCC = int.TryParse(new Regex(BelarusbankSmsRegex.Mcc).Match(msg).Value, NumberStyles.Any, ci, out int tempMcc) ? tempMcc : default;
                         dataItem.Descripton = new Regex(BelarusbankSmsRegex.Descripton).Match(msg).Value.ToUpper();
                         Data.Add(dataItem);
                     }

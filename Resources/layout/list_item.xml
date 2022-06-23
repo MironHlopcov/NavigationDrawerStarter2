@@ -12,31 +12,28 @@
         android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="15dp"/>
-    <Linearlayout
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deskription_TextView"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:textColor="#00A14B"
+        android:layout_marginEnd="88dp"
         android:layout_toEndOf="@id/sum_TextView"
-        android:layout_toLeftOf="@id/data_TextView">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/deskription_TextView"
-            android:text="12341234123qwerqwerqwer41234123412341234"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#00A14B"
-            android:ellipsize="end"
-            android:lines="1"
-            android:scrollHorizontally="true"
-            android:inputType="text"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mcc_code_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/deskription_TextView"
-            android:textColor="#00A14B"
-            android:ellipsize="end"
-            android:maxLines="1"/>
-    </Linearlayout>
+        android:ellipsize="end"
+        android:lines="1"
+        android:singleLine="true"
+        android:maxLines="1"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mcc_code_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="12dp"
+        android:layout_marginEnd="88dp"
+        android:layout_toEndOf="@id/sum_TextView"
+        android:layout_below="@+id/deskription_TextView"
+        android:ellipsize="end"
+        android:maxLines="2"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/data_TextView"
         android:layout_width="80dp"

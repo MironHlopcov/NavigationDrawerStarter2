@@ -128,7 +128,7 @@ namespace NavigationDrawerStarter.Fragments
             List<ExpandableChildModel> groupData = new List<ExpandableChildModel>();
             foreach (string item in childItems)
             {
-                if (item != "0")
+                if (item != "0" && item != null) //to do
                     groupData.Add(new ExpandableChildModel(item));
             }
             listChildData.Add(new ExpandableGroupModel { Name = groupName, IsCheked = false }, groupData);
@@ -213,18 +213,7 @@ namespace NavigationDrawerStarter.Fragments
             sv1.SetQuery(lv1.GetItemAtPosition(e.Position).ToString(), true);
             lv1.Visibility = ViewStates.Gone;
         }
-        public List<string> FiltredList
-        {
-            get
-            {
-                return _FiltredList;
-            }
-            set
-            {
-                _FiltredList?.Clear();
-                _FiltredList.AddRange(value);
-            }
-        }
+       
         #endregion
 
         #region OnButtonClick
@@ -251,7 +240,18 @@ namespace NavigationDrawerStarter.Fragments
 
         }
         #endregion
-
+        public List<string> FiltredList
+        {
+            get
+            {
+                return _FiltredList;
+            }
+            set
+            {
+                _FiltredList?.Clear();
+                _FiltredList.AddRange(value);
+            }
+        }
 
     }
     public class FilterItems

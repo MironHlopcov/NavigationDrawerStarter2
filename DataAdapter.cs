@@ -19,7 +19,6 @@ namespace NavigationDrawerStarter
         {
             this.context = context;
             this.dataItems = dataItems;
-           
         }
 
         public DataAdapter(AndroidX.Fragment.App.Fragment context, int position)
@@ -65,15 +64,16 @@ namespace NavigationDrawerStarter
         {
             var view = convertView ?? context.LayoutInflater.Inflate(Resource.Layout.list_item, parent, false);// inflate the xml for each item
 
-            var txtTitulo = view.FindViewById<TextView>(Resource.Id.sum_TextView);
-            var txtDiretor = view.FindViewById<TextView>(Resource.Id.deskription_TextView);
-            //txtDiretor.Ellipsize = Android.Text.TextUtils.TruncateAt.End;
-            var txtLancamento = view.FindViewById<TextView>(Resource.Id.data_TextView);
+            var txtSum = view.FindViewById<TextView>(Resource.Id.sum_TextView);
+            var txtDeskr = view.FindViewById<TextView>(Resource.Id.deskription_TextView);
+            var txtMcc = view.FindViewById<TextView>(Resource.Id.mcc_code_TextView); 
+            var txtDate = view.FindViewById<TextView>(Resource.Id.data_TextView);
 
-            txtTitulo.Text = dataItems[position].Sum.ToString();
-            txtDiretor.Text = dataItems[position].Descripton;
-            txtLancamento.Text = dataItems[position].Date.ToShortDateString();
-
+            txtSum.Text = dataItems[position].Sum.ToString();
+            txtDeskr.Text = dataItems[position].Descripton;
+            txtDate.Text = dataItems[position].Date.ToShortDateString();
+            txtMcc.Text = dataItems[position].MCC == 0 ? "" : $"{dataItems[position].MCC}: {dataItems[position].MccDeskription}";
+           
             return view;
         }
         public override void NotifyDataSetChanged()

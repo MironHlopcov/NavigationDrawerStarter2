@@ -1,5 +1,6 @@
 ﻿using EfcToXamarinAndroid.Core;
 using Microsoft.EntityFrameworkCore;
+using NavigationDrawerStarter.Configs.ManagerCore;
 using NavigationDrawerStarter.Filters;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,6 @@ namespace NavigationDrawerStarter
         private static readonly string dbFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
         private static readonly string fileName = "Cats.db";
         private static readonly string dbFullPath = Path.Combine(dbFolder, fileName);
-
-
-
 
         public static async Task SetDatasFromDB()
         {
@@ -95,10 +93,12 @@ namespace NavigationDrawerStarter
             Cashs.AddRange(GetCashs(dataItems));
         }
 
-
-
         public static List<DataItem> GetPayments(List<DataItem> dataItems)
         {
+            MccConfigurationManager mccManager = MccConfigurationManager.ConfigManager;
+            var codes = mccManager.MccConfigurationFromJson;
+            var sdf = dataItems.Where(x => x.OperacionTyp == OperacionTyps.OPLATA).Select(x => x.MccDeskription = codes.Keys.Contains(x.MCC)? codes[x.MCC]: null).ToList();
+            ////return dataItems.Where(x => x.OperacionTyp == OperacionTyps.OPLATA).ToList();
             return dataItems.Where(x => x.OperacionTyp == OperacionTyps.OPLATA).ToList();
         }
         public static List<DataItem> GetDeposits(List<DataItem> dataItems)
@@ -109,7 +109,6 @@ namespace NavigationDrawerStarter
         {
             return dataItems.Where(x => x.OperacionTyp == OperacionTyps.NALICHNYE).ToList();
         }
-
 
         public static MFilter MFilter
         {
