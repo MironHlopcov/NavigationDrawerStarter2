@@ -64,6 +64,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomPieSeries.cs" />
     <Compile Include="CastomTabs\CustomStrategy.cs" />
     <Compile Include="CastomTabs\CustomViewPager2Adapter.cs" />
     <Compile Include="Configs\ManagerCore\MccConfigurationManager.cs" />

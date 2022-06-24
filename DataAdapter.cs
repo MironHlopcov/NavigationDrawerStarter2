@@ -4,6 +4,7 @@ using Android.Widget;
 using EfcToXamarinAndroid.Core;
 using NavigationDrawerStarter.Filters;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NavigationDrawerStarter
 {
@@ -69,7 +70,8 @@ namespace NavigationDrawerStarter
             var txtMcc = view.FindViewById<TextView>(Resource.Id.mcc_code_TextView); 
             var txtDate = view.FindViewById<TextView>(Resource.Id.data_TextView);
 
-            txtSum.Text = dataItems[position].Sum.ToString();
+            txtSum.Text = string.Format("{0:F}", dataItems[position].Sum);
+            //txtSum.Text = dataItems[position].Sum.ToString(CultureInfo.InvariantCulture);
             txtDeskr.Text = dataItems[position].Descripton;
             txtDate.Text = dataItems[position].Date.ToShortDateString();
             txtMcc.Text = dataItems[position].MCC == 0 ? "" : $"{dataItems[position].MCC}: {dataItems[position].MccDeskription}";

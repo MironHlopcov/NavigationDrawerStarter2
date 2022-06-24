@@ -188,7 +188,6 @@ namespace NavigationDrawerStarter
                 if (result != null)
                 {
                     Parser parserBelarusbank = new Parser(result.FullPath, configuration.Banks);//This operation took 3558
-
                     var data = await parserBelarusbank.GetDataFromPdf();
                     await DatesRepositorio.AddDatas(data);//This operation took 10825
                     //adapter.AddNewItemToFragments();
