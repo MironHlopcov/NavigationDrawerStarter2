@@ -54,8 +54,9 @@ namespace NavigationDrawerStarter
                 double num5 = slice.Value / total * AngleSpan;
                 double num6 = num4 + num5;
                 double num7 = (slice.IsExploded ? (ExplodedDistance * num) : 0.0);
-                double num8 = num4 + num5 / 2.0;
-                double num9 = num8 * Math.PI / 180.0;
+                //double num8 = num4 + 0 / 2.0; //0 - что бы подпись начиналась не с середины сектора
+                double num8 = StartAngle; //что бы подпись начиналась не с середины сектора
+                double num9 = num8 * Math.PI / 180.0; //перевод градусов в радианы
                 ScreenPoint item = new ScreenPoint(screenPoint.X + num7 * Math.Cos(num9), screenPoint.Y + num7 * Math.Sin(num9));
                 while (true)
                 {
@@ -102,13 +103,17 @@ namespace NavigationDrawerStarter
                         slice.Label,
                         slice.Value / total * 100.0
                     });
-                    int num11 = Math.Sign(Math.Cos(num9));
+                    //int num11 = Math.Sign(Math.Cos(num9));
+                    int num11 = 1; //чтобы подпись весегда была повернута в право
 
-                   
+                    //ScreenPoint screenPoint2 = new ScreenPoint(item.X + (num2 + TickDistance) * Math.Cos(num9), item.Y + (num2 + TickDistance) * Math.Sin(num9));
+                    //ScreenPoint screenPoint3 = new ScreenPoint(screenPoint2.X + TickRadialLength * Math.Cos(num9), screenPoint2.Y + TickRadialLength * Math.Sin(num9));
+                    //ScreenPoint screenPoint4 = new ScreenPoint(screenPoint3.X + TickHorizontalLength * (double)num11, screenPoint3.Y);
 
                     ScreenPoint screenPoint2 = new ScreenPoint(item.X + (num2 + TickDistance) * Math.Cos(num9), item.Y + (num2 + TickDistance) * Math.Sin(num9));
-                    ScreenPoint screenPoint3 = new ScreenPoint(screenPoint2.X + TickRadialLength * Math.Cos(num9), screenPoint2.Y + TickRadialLength * Math.Sin(num9));
+                    ScreenPoint screenPoint3 = new ScreenPoint(screenPoint2.X + TickRadialLength , screenPoint2.Y + TickRadialLength * Math.Sin(num9));
                     ScreenPoint screenPoint4 = new ScreenPoint(screenPoint3.X + TickHorizontalLength * (double)num11, screenPoint3.Y);
+
 
                     if (slice.Fill == UnVisebleFillColors)
                     {
@@ -153,8 +158,6 @@ namespace NavigationDrawerStarter
                 OxyColor fill = (InsideLabelColor.IsAutomatic() ? base.ActualTextColor : InsideLabelColor);
                 rc.DrawText(p2, text2, fill, base.ActualFont, base.ActualFontSize, base.ActualFontWeight, num13, HorizontalAlignment.Center, VerticalAlignment.Middle);
             }
-
-
         }
     }
 }

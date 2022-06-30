@@ -1,7 +1,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="250dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -57,13 +57,14 @@
                 android:id="@+id/btn_calendar1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_gravity="start|center_vertical"
+                android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@android:drawable/ic_menu_my_calendar"
                 android:visibility="visible" />
             <EditText
                 android:id="@+id/text_edit1"
+           
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -73,7 +74,7 @@
                 android:id="@+id/btn_clear_clear1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="start|center_vertical"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@android:drawable/ic_delete"
@@ -92,13 +93,14 @@
                 android:id="@+id/btn_calendar2"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_gravity="start|center_vertical"
+                android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@android:drawable/ic_menu_my_calendar"
                 android:visibility="visible" />
             <EditText
                 android:id="@+id/text_edit2"
+            
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -108,7 +110,7 @@
                 android:id="@+id/btn_clear_clear2"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="start|center_vertical"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@android:drawable/ic_delete"

@@ -176,22 +176,28 @@ namespace NavigationDrawerStarter
                 }
                 };
 
+
+
+                double horizontalLength = 100;
+
                 var pieSeriesSum = new CustomPieSeries();
 
                 //pieSeriesSum.OutsideLabelFormat = "";
                 pieSeriesSum.InsideLabelPosition = 90;
-                pieSeriesSum.StartAngle = 0;
+                pieSeriesSum.StartAngle = 80;
                 pieSeriesSum.UnVisebleFillColors = OxyColors.WhiteSmoke;
                 pieSeriesSum.Diameter = 0.2;
+                pieSeriesSum.TickHorizontalLength = horizontalLength;
                 pieSeriesSum.Slices.Add(new PieSlice("", 100 - sum) { Fill = pieSeriesSum.UnVisebleFillColors });
                 pieSeriesSum.Slices.Add(new PieSlice("", sum) { Fill = OxyColors.PaleVioletRed });
 
 
                 var pieSeriesCount = new CustomPieSeries();
                 pieSeriesCount.Diameter = 0.4;
-                pieSeriesCount.StartAngle = 180;
+                pieSeriesCount.StartAngle = 90;
                 pieSeriesCount.UnVisebleFillColors = OxyColors.WhiteSmoke;
-                pieSeriesCount.Diameter = 0.4;
+                pieSeriesCount.Diameter = 0.5;
+                pieSeriesCount.TickHorizontalLength = horizontalLength;
                 pieSeriesCount.Slices.Add(new PieSlice("", 100 - count) { Fill = pieSeriesSum.UnVisebleFillColors });
                 pieSeriesCount.Slices.Add(new PieSlice("", count) { Fill = OxyColors.PaleVioletRed });
 
