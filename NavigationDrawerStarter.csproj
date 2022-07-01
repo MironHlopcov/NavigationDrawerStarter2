@@ -78,6 +78,7 @@
     <Compile Include="Filters\ExpandableListAdapter.cs" />
     <Compile Include="Filters\MFilter.cs" />
     <Compile Include="Fragments\DatePickerFragment.cs" />
+    <Compile Include="Fragments\ExampleDialog.cs" />
     <Compile Include="Fragments\RightMenuT.cs" />
     <Compile Include="Fragments\RightMenu.cs" />
     <Compile Include="MainActivity.cs" />
@@ -240,6 +241,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\group_indicator.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\example_dialog.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

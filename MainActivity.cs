@@ -266,7 +266,6 @@ namespace NavigationDrawerStarter
             //}
             #endregion
 
-
             #region FilterBtnClic
             if (id == Resource.Id.action_openRight)
             {
@@ -376,12 +375,14 @@ namespace NavigationDrawerStarter
 
             return base.OnOptionsItemSelected(item);
         }
-
+        //https://medium.com/alexander-schaefer/implementing-the-new-material-design-full-screen-dialog-for-android-e9dcc712cb38
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+            //View view = (View) sender;
+            //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
+            //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+
+            ExampleDialog.Display(SupportFragmentManager);
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)
